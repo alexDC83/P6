@@ -1,80 +1,47 @@
-async function getWorks() {
-  try {
-    const response = await fetch("http://localhost:5678/api/works");
+import { getWorks, getCategories } from "./api.js"
+import { divGallery, sectionCategories, buttonAll } from "./domLinker.js"
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error getWorks() :", error);
-    displayError();
-  }
+const createGallery = data => {
+  divGallery.innerHTML = ''
+
+  data.forEach(item => {
+    const figure = document.createElement('figure')
+
+    const img = document.createElement('img')
+    img.src = item.imageUrl
+    img.alt = item.title
+
+    figure.appendChild(img)
+
+    const figCaption = document.createElement('figcaption')
+    figCaption.innerHTML = item.title
+
+    figure.appendChild(figCaption)
+
+    divGallery.appendChild(figure)
+  });
 }
 
-function displayError() {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
-  const div = document.createElement("div");
-  div.textContent = "Erreur: On a pas réussi à récupérer les travaux";
+const createCategories = data => {
+  data.forEach(item => {
+    const button = document.createElement('button')
+    button.innerHTML = item.name
 
-  gallery.style.display = "flex";
-  gallery.style.alignItems = "center";
-  gallery.style.justifyContent = "center";
+    button.addEventListener('click', () => {
 
-  gallery.appendChild(div);
+      getWorks().then(works => {
+        const dataFiltered = works.filter(element => item.id === element.categoryId)
+        createGallery(dataFiltered)
+      })
+
+    })
+
+    sectionCategories.appendChild(button)
+  })
 }
 
-// data = résultat de getWorks()
-/*
- [
-  {
-    "id": 1,
-    "title": "Abajour Tahina",
-    "imageUrl": "http://localhost:5678/images/abajour-tahina1651286843956.png",
-    "categoryId": 1,
-    "userId": 1,
-    "category": {
-      "id": 1,
-      "name": "Objets"
-    }
-  };
- ]
-*/
-/*
-	<figure>
-	    <img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-		<figcaption>Appartement Paris X</figcaption>
-	</figure>
-*/
-function generateGallery(data) {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
+buttonAll.addEventListener('click', () => getWorks().then(data => createGallery(data)))
 
-  for (const element of data) {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const figcaption = document.createElement("figcaption");
-
-    img.src = element.imageUrl;
-    img.alt = element.title;
-    figcaption.textContent = element.title;
-
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-
-    gallery.appendChild(figure);
-  }
-}
-
-// Fonction pour initialiser et connecter avec le backend.
-async function initializeGallery() {
-  const works = await getWorks();
-  if (works) {
-    generateGallery(works);
-  }
-}
-
-initializegGallery();
+getWorks().then(data => createGallery(data))
+getCategories().then(data => createCategories(data))
