@@ -150,7 +150,7 @@ header {
 }
 
 section {
-  margin: 50px 0;
+  margin: 100px 0;
 }
 
 h1 {
@@ -162,7 +162,7 @@ h1 {
   color: #b1663c;
 }
 
-h1 > span {
+h1>span {
   font-family: "Work Sans";
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -186,7 +186,13 @@ nav li {
   font-size: 1.2em;
 }
 
-li:hover {
+nav a {
+  text-decoration: none;
+  color: black;
+}
+
+li:hover,
+nav a:hover {
   color: #b1663c;
 }
 
@@ -239,7 +245,7 @@ li:hover {
   margin: auto;
 }
 
-#contact > * {
+#contact>* {
   text-align: center;
 }
 
@@ -292,6 +298,8 @@ section.categories {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-top: 0;
+  margin-bottom: 50px;
 }
 
 section.categories button {
@@ -353,4 +361,44 @@ section.categories button {
 
 .password_forget {
   color: #000;
+}
+
+/* Edit Mode - Mode Admin */
+#edit-modal {
+  display: none;
+}
+
+.banner {
+  width: 100%;
+  background-color: black;
+  height: 59px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+button span {
+  padding-left: 10px;
+}
+
+#portfolio button {
+  margin-left: 20px;
+}
+
+#portfolio span {
+  color: black;
 }

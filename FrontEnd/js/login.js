@@ -1,28 +1,19 @@
 import { login } from "./api.js";
+import { formLogin, email, password } from "./domLinker.js";
 
-const form = document.querySelector("#form-login");
-console.log(form);
-form.addEventListener("submit", async (event) => {
+
+formLogin.addEventListener("submit", event => {
   event.preventDefault();
 
-  const email = document.querySelector("#email").value;
-  const password = document.querySelector("#password").value;
-
   const loginData = {
-    email,
-    password,
+    email: email.value,
+    password: password.value
   };
 
-  const result = login(loginData).then((response) => {
-    console.log("réponse : ", response);
+  login(loginData)
+    .then(data => {
+      localStorage.token = data.token
+      window.location.href = '../index.html'
+    }).catch(error => alert(error))
 
-    if (!response.token) {
-      return response.message;
-    }
-
-    if (response.token) {
-      // localStorage.setItem('token', result.token);
-      // window.location.href = '/'; // Redirection après login
-    }
-  });
 });

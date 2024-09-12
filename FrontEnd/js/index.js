@@ -1,5 +1,8 @@
 import { getWorks, getCategories } from "./api.js"
-import { divGallery, sectionCategories, buttonAll } from "./domLinker.js"
+import {
+  divGallery, sectionCategories, buttonAll,
+  aLogin, banner, header, editModal
+} from "./domLinker.js"
 
 
 const createGallery = data => {
@@ -42,6 +45,20 @@ const createCategories = data => {
 }
 
 buttonAll.addEventListener('click', () => getWorks().then(data => createGallery(data)))
+aLogin.addEventListener('click', () => localStorage.removeItem('token'))
+
+if (localStorage.token) {
+  aLogin.innerHTML = 'logout'
+  banner.style.display = 'flex'
+  header.style.marginTop = '79px'
+  sectionCategories.style.display = 'none'
+  editModal.style.display = 'inline-flex'
+  divGallery.style.marginTop = "100px"
+}
+
+
+
 
 getWorks().then(data => createGallery(data))
 getCategories().then(data => createCategories(data))
+
