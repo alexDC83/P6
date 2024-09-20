@@ -1,64 +1,97 @@
-import { getWorks, getCategories } from "./api.js"
+import { getWorks, getCategories } from "./api.js";
 import {
-  divGallery, sectionCategories, buttonAll,
-  aLogin, banner, header, editModal
-} from "./domLinker.js"
+  divGallery,
+  sectionCategories,
+  buttonAll,
+  aLogin,
+  banner,
+  header,
+  editModal,
+  
+} from "./domLinker.js";
 
+const createGallery = (data) => {
+  divGallery.innerHTML = "";
 
-const createGallery = data => {
-  divGallery.innerHTML = ''
+  data.forEach((item) => {
+    const figure = document.createElement("figure");
 
-  data.forEach(item => {
-    const figure = document.createElement('figure')
+    const img = document.createElement("img");
+    img.src = item.imageUrl;
+    img.alt = item.title;
 
-    const img = document.createElement('img')
-    img.src = item.imageUrl
-    img.alt = item.title
+    figure.appendChild(img);
 
-    figure.appendChild(img)
+    const figCaption = document.createElement("figcaption");
+    figCaption.innerHTML = item.title;
 
-    const figCaption = document.createElement('figcaption')
-    figCaption.innerHTML = item.title
+    figure.appendChild(figCaption);
 
-    figure.appendChild(figCaption)
-
-    divGallery.appendChild(figure)
+    divGallery.appendChild(figure);
   });
-}
+};
 
-const createCategories = data => {
-  data.forEach(item => {
-    const button = document.createElement('button')
-    button.innerHTML = item.name
+const resetClassButton = () =>
+  document.querySelectorAll("button").forEach((btn) => {
+    btn.classList.remove("selected");
+  });
 
-    button.addEventListener('click', () => {
+const createCategories = (data) => {
+  data.forEach((item) => {
+    const button = document.createElement("button");
+    button.innerHTML = item.name;
 
-      getWorks().then(works => {
-        const dataFiltered = works.filter(element => item.id === element.categoryId)
-        createGallery(dataFiltered)
-      })
+    button.addEventListener("click", () => {
+      resetClassButton();
 
-    })
+      button.classList.add("selected");
 
-    sectionCategories.appendChild(button)
-  })
-}
+      getWorks().then((works) => {
+        const dataFiltered = works.filter(
+          (element) => item.id === element.categoryId
+        );
+        createGallery(dataFiltered);
+      });
+    });
 
-buttonAll.addEventListener('click', () => getWorks().then(data => createGallery(data)))
-aLogin.addEventListener('click', () => localStorage.removeItem('token'))
+    sectionCategories.appendChild(button);
+  });
+};
+
+buttonAll.addEventListener("click", () => {
+  resetClassButton();
+
+  buttonAll.classList.add("selected");
+  getWorks().then((data) => createGallery(data));
+});
+
+aLogin.addEventListener("click", () => localStorage.removeItem("token"));
 
 if (localStorage.token) {
-  aLogin.innerHTML = 'logout'
-  banner.style.display = 'flex'
-  header.style.marginTop = '79px'
-  sectionCategories.style.display = 'none'
-  editModal.style.display = 'inline-flex'
-  divGallery.style.marginTop = "100px"
+  aLogin.innerHTML = "logout";
+  banner.style.display = "flex";
+  header.style.marginTop = "79px";
+  sectionCategories.style.display = "none";
+  editModal.style.display = "inline-flex";
+  divGallery.style.marginTop = "100px";
 }
 
+getWorks().then((data) => createGallery(data));
+getCategories().then((data) => createCategories(data));
 
 
 
-getWorks().then(data => createGallery(data))
-getCategories().then(data => createCategories(data))
 
+
+const modal = document.querySelector("editmodal");
+ createCategories("editmodal")
+button  ("editmodal") ("click" ("editmodal "))
+
+const data = () =>
+  document.querySelectorAll("#edit-modal").forEach((btn) => {
+   createCategories (data)
+  });
+  const  modifierelement = querySelector ("#edit-modal")
+    "#edit-modal".forEach((item) => {
+      const button = document.createElement("button");
+      button.innerHTML = item.name;
