@@ -7,24 +7,41 @@ import {
   banner,
   header,
   editModal,
-  
+  modal,
+  modalBtnClose,
+  modalGallery
 } from "./domLinker.js";
 
 const createGallery = (data) => {
   divGallery.innerHTML = "";
+  modalGallery.innerHTML = "";
 
   data.forEach((item) => {
     const figure = document.createElement("figure");
+    const figureModal = document.createElement("figure");
 
     const img = document.createElement("img");
     img.src = item.imageUrl;
     img.alt = item.title;
 
-    figure.appendChild(img);
+    const imgModal = document.createElement("img");
+    imgModal.src = item.imageUrl;
+    imgModal.alt = item.title;
+
+    const garbageIcon = document.createElement('img')
+    garbageIcon.src = './assets/icons/garbage.png'
+    garbageIcon.alt = 'garbage icon'
+    garbageIcon.setAttribute('class', 'icon garbage-icon')
+
+
+    figureModal.appendChild(imgModal);
+    figureModal.appendChild(garbageIcon)
+    modalGallery.appendChild(figureModal)
 
     const figCaption = document.createElement("figcaption");
     figCaption.innerHTML = item.title;
 
+    figure.appendChild(img)
     figure.appendChild(figCaption);
 
     divGallery.appendChild(figure);
@@ -76,22 +93,18 @@ if (localStorage.token) {
   divGallery.style.marginTop = "100px";
 }
 
+editModal.addEventListener("click", () => {
+  modal.style.display = 'block'
+})
+
+modalBtnClose.addEventListener("click", () => {
+  modal.style.display = 'none'
+})
+
+
+
 getWorks().then((data) => createGallery(data));
 getCategories().then((data) => createCategories(data));
 
 
 
-
-
-const modal = document.querySelector("editmodal");
- createCategories("editmodal")
-button  ("editmodal") ("click" ("editmodal "))
-
-const data = () =>
-  document.querySelectorAll("#edit-modal").forEach((btn) => {
-   createCategories (data)
-  });
-  const  modifierelement = querySelector ("#edit-modal")
-    "#edit-modal".forEach((item) => {
-      const button = document.createElement("button");
-      button.innerHTML = item.name;

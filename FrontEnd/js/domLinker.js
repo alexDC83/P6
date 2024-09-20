@@ -9,3 +9,7 @@ export const editModal = document.getElementById('edit-modal')
 export const formLogin = document.querySelector("#form-login")
 export const email = document.querySelector("#email")
 export const password = document.querySelector("#password")
+// MODAL
+export const modal = document.getElementById('modal')
+export const modalBtnClose = document.getElementById('modal-btn-close')
+export const modalGallery = document.querySelector('#modal .gallery')
