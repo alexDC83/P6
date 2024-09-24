@@ -162,7 +162,7 @@ h1 {
   color: #b1663c;
 }
 
-h1>span {
+h1 > span {
   font-family: "Work Sans";
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -245,7 +245,7 @@ nav a:hover {
   margin: auto;
 }
 
-#contact>* {
+#contact > * {
   text-align: center;
 }
 
@@ -466,7 +466,7 @@ section.categories button.selected {
 }
 
 .modal-main h1 {
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   font-weight: 400;
   font-size: 26px;
   line-height: 30px;
@@ -521,8 +521,8 @@ section.categories button.selected {
 
 #modal button {
   border-radius: 60px;
-  border: 1px solid #1D6154;
-  background: #1D6154;
+  border: 1px solid #1d6154;
+  background: #1d6154;
   color: white;
   text-align: center;
   font-family: Syne;
@@ -552,4 +552,24 @@ section.categories button.selected {
   color: black;
   background-color: transparent;
   border: unset;
+}
+.buttonvalider{
+  border-radius: 60px;
+  border: 1px solid #1d6154;
+  background: #1d6154;
+  color: white;
+  text-align: center;
+  font-family: Syne;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  height: 37px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 9px;
+  padding-top: 9px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
 }
