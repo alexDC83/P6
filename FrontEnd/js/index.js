@@ -10,6 +10,9 @@ import {
   modal,
   modalBtnClose,
   modalGallery,
+  btn-add-picture
+  ajouterphoto
+  buttonvalider
 } from "./domLinker.js";
 
 const createGallery = (data) => {
@@ -103,4 +106,4 @@ modalBtnClose.addEventListener("click", () => {
 getWorks().then((data) => createGallery(data));
 getCategories().then((data) => createCategories(data));
 
-ajouterphoto.addEventListener("click", () => {});
+ajouterphoto.addEventListener("click", () => photoadd.createGallery("data"));;

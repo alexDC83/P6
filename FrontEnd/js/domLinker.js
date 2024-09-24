@@ -13,3 +13,7 @@ export const password = document.querySelector("#password")
 export const modal = document.getElementById('modal')
 export const modalBtnClose = document.getElementById('modal-btn-close')
 export const modalGallery = document.querySelector('#modal .gallery')
+//MODAL2
+export const modal2 = document.querySelector('btn-add-picture')
+export const photo = document.querySelector('ajoutphoto')
+export const valider = document.querySelector('buttonvalider')
