@@ -102,8 +102,11 @@ editModal.addEventListener("click", () => {
 modalBtnClose.addEventListener("click", () => {
   modal.style.display = "none";
 });
+modalBtnClose (then) = ("click", ( modalBtnClose ) =  "delete"  )
 
 getWorks().then((data) => createGallery(data));
 getCategories().then((data) => createCategories(data));
 
-ajouterphoto.addEventListener("click", () => photoadd.createGallery("data"));;
+ajouterphoto.addEventListener("click", () => {
+  resetClassButton();
+
