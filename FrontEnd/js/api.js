@@ -1,7 +1,9 @@
 export const getWorks = () =>
   fetch("http://localhost:5678/api/works").then((res) => res.json());
+
 export const getCategories = () =>
   fetch("http://localhost:5678/api/categories").then((res) => res.json());
+
 export const login = data =>
   fetch("http://localhost:5678/api/users/login", {
     method: "POST",
@@ -16,3 +18,12 @@ export const login = data =>
       }
       return data
     })
+
+export const deleteWork = id =>
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.token}`
+    }
+  })

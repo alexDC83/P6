@@ -1,4 +1,4 @@
-import { getWorks, getCategories } from "./api.js";
+import { getWorks, getCategories, deleteWork } from "./api.js";
 import {
   divGallery,
   sectionCategories,
@@ -10,9 +10,9 @@ import {
   modal,
   modalBtnClose,
   modalGallery,
-  btn-add-picture
-  ajouterphoto
-  buttonvalider
+  btnAddPicture,
+  formAddPicture,
+  btnArrowBack
 } from "./domLinker.js";
 
 const createGallery = (data) => {
@@ -35,6 +35,12 @@ const createGallery = (data) => {
     garbageIcon.src = "./assets/icons/garbage.png";
     garbageIcon.alt = "garbage icon";
     garbageIcon.setAttribute("class", "icon garbage-icon");
+    garbageIcon.addEventListener('click', () => {
+      console.log("On a cliqué sur la poubelle avec l'id : ", item.id)
+      deleteWork(item.id)
+        .then(() => getWorks())
+        .then(data => createGallery(data))
+    })
 
     figureModal.appendChild(imgModal);
     figureModal.appendChild(garbageIcon);
@@ -102,11 +108,23 @@ editModal.addEventListener("click", () => {
 modalBtnClose.addEventListener("click", () => {
   modal.style.display = "none";
 });
-modalBtnClose (then) = ("click", ( modalBtnClose ) =  "delete"  )
 
 getWorks().then((data) => createGallery(data));
 getCategories().then((data) => createCategories(data));
 
-ajouterphoto.addEventListener("click", () => {
-  resetClassButton();
+/**** Modal ajouter une photo ****/
+
+btnAddPicture.addEventListener('click', () => {
+  modalGallery.style.display = 'none'
+  btnAddPicture.style.display = 'none'
+  formAddPicture.style.display = "block"
+  btnArrowBack.style.display = 'flex'
+})
+
+btnArrowBack.addEventListener('click', () => {
+  modalGallery.style.display = 'grid'
+  btnAddPicture.style.display = 'block'
+  formAddPicture.style.display = "none"
+  btnArrowBack.style.display = 'none'
+})
 

@@ -162,7 +162,7 @@ h1 {
   color: #b1663c;
 }
 
-h1 > span {
+h1>span {
   font-family: "Work Sans";
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -245,7 +245,7 @@ nav a:hover {
   margin: auto;
 }
 
-#contact > * {
+#contact>* {
   text-align: center;
 }
 
@@ -260,7 +260,8 @@ nav a:hover {
   flex-direction: column;
 }
 
-#contact input {
+#contact input,
+#modal input {
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -553,23 +554,172 @@ section.categories button.selected {
   background-color: transparent;
   border: unset;
 }
-.buttonvalider{
-  border-radius: 60px;
-  border: 1px solid #1d6154;
-  background: #1d6154;
-  color: white;
-  text-align: center;
-  font-family: Syne;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  height: 37px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 9px;
-  padding-top: 9px;
-  margin-left: 10px;
-  margin-right: 10px;
+
+#modal #modal-btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   cursor: pointer;
+  height: 40px;
+  width: 40px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: unset;
+}
+
+.modal-main h1 {
+  font-family: 'Work Sans';
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 30px;
+  color: black;
+  margin-top: 60px;
+}
+
+.modal .gallery {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 50px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px 80px;
+  grid-column-gap: 10px;
+  grid-row-gap: 20px;
+  width: auto;
+  border-bottom: 1px solid rgba(179, 179, 179, 1);
+}
+
+.modal .gallery img {
+  height: 107px;
+  object-fit: cover;
+}
+
+.modal .gallery figure {
+  position: relative;
+}
+
+.modal .gallery figure .icon {
+  position: absolute;
+  top: 5px;
+  height: 17px;
+  width: 17px;
+  cursor: pointer;
+}
+
+.garbage-icon {
+  right: 5px;
+}
+
+.move-icon {
+  right: 25px;
+}
+
+.modal .gallery figure figcaption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.modal .modal-main #btn-add-picture {
+  height: 36px;
+  width: 237px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*** Form Add Picture ***/
+#form-add-picture {
+  display: none;
+  width: 440px;
+}
+
+#form-add-picture input[type="submit"] {
+  height: 36px;
+}
+
+hr {
+  margin-top: 50px;
+  width: 100%;
+  border: 1px solid #B3B3B3;
+}
+
+#container-picture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #E8F1F7;
+  border-radius: 3px;
+  height: 169px;
+}
+
+#container-picture img {
+  width: 58px;
+  height: 58px;
+  max-width: 440px;
+  max-height: 169px;
+}
+
+#container-picture label {
+  font-family: 'Work Sans';
+  font-weight: 500;
+  color: #306685;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #CBD6DC;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 180px;
+  text-align: center;
+  border-radius: 50px;
+  cursor: pointer;
+  height: 36px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container-picture span {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  color: #444444;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+#form-add-picture .disabled {
+  background-color: #A7A7A7;
+  cursor: not-allowed;
+}
+
+.input-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+#title-error,
+#select-error,
+#file-error {
+  display: none;
+}
+
+#form-add-picture form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
