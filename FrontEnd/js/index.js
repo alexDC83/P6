@@ -12,7 +12,7 @@ import {
   modalGallery,
   btnAddPicture,
   formAddPicture,
-  btnArrowBack
+  btnArrowBack,
 } from "./domLinker.js";
 
 const createGallery = (data) => {
@@ -35,12 +35,12 @@ const createGallery = (data) => {
     garbageIcon.src = "./assets/icons/garbage.png";
     garbageIcon.alt = "garbage icon";
     garbageIcon.setAttribute("class", "icon garbage-icon");
-    garbageIcon.addEventListener('click', () => {
-      console.log("On a cliqué sur la poubelle avec l'id : ", item.id)
+    garbageIcon.addEventListener("click", () => {
+      console.log("On a cliqué sur la poubelle avec l'id : ", item.id);
       deleteWork(item.id)
         .then(() => getWorks())
-        .then(data => createGallery(data))
-    })
+        .then((data) => createGallery(data));
+    });
 
     figureModal.appendChild(imgModal);
     figureModal.appendChild(garbageIcon);
@@ -114,17 +114,16 @@ getCategories().then((data) => createCategories(data));
 
 /**** Modal ajouter une photo ****/
 
-btnAddPicture.addEventListener('click', () => {
-  modalGallery.style.display = 'none'
-  btnAddPicture.style.display = 'none'
-  formAddPicture.style.display = "block"
-  btnArrowBack.style.display = 'flex'
-})
+btnAddPicture.addEventListener("click", () => {
+  modalGallery.style.display = "none";
+  btnAddPicture.style.display = "none";
+  formAddPicture.style.display = "block";
+  btnArrowBack.style.display = "flex";
+});
 
-btnArrowBack.addEventListener('click', () => {
-  modalGallery.style.display = 'grid'
-  btnAddPicture.style.display = 'block'
-  formAddPicture.style.display = "none"
-  btnArrowBack.style.display = 'none'
-})
-
+btnArrowBack.addEventListener("click", () => {
+  modalGallery.style.display = "grid";
+  btnAddPicture.style.display = "block";
+  formAddPicture.style.display = "none";
+  btnArrowBack.style.display = "none";
+});
