@@ -1,4 +1,4 @@
-import { getWorks, getCategories, deleteWork } from "./api.js";
+import { getWorks, getCategories, deleteWork, postWork } from "./api.js";
 import {
   divGallery,
   sectionCategories,
@@ -13,7 +13,16 @@ import {
   btnAddPicture,
   formAddPicture,
   btnArrowBack,
+  titleModal,
+  fileUpload,
+  preview,
+  labelFileUpload,
+  spanFileUpload,
+  selectCategory,
+  formAddWork,
+  inputTitle,
 } from "./domLinker.js";
+import { validateForm } from "./utils.js";
 
 const createGallery = (data) => {
   divGallery.innerHTML = "";
@@ -83,6 +92,16 @@ const createCategories = (data) => {
   });
 };
 
+const createSelectCategories = (data) => {
+  data.forEach((item) => {
+    const option = document.createElement("option");
+    option.setAttribute("value", item.id);
+    option.innerHTML = item.name;
+
+    selectCategory.appendChild(option);
+  });
+};
+
 buttonAll.addEventListener("click", () => {
   resetClassButton();
 
@@ -110,7 +129,10 @@ modalBtnClose.addEventListener("click", () => {
 });
 
 getWorks().then((data) => createGallery(data));
-getCategories().then((data) => createCategories(data));
+getCategories().then((data) => {
+  createCategories(data);
+  createSelectCategories(data);
+});
 
 /**** Modal ajouter une photo ****/
 
@@ -119,6 +141,11 @@ btnAddPicture.addEventListener("click", () => {
   btnAddPicture.style.display = "none";
   formAddPicture.style.display = "block";
   btnArrowBack.style.display = "flex";
+  titleModal.innerHTML = "Ajout photo";
+
+  //TODO afficher le label et le span
+  // et remettre dans l'attribut src de la preview l'image d'orgine
+  // et effacer l'input title
 });
 
 btnArrowBack.addEventListener("click", () => {
@@ -126,4 +153,39 @@ btnArrowBack.addEventListener("click", () => {
   btnAddPicture.style.display = "block";
   formAddPicture.style.display = "none";
   btnArrowBack.style.display = "none";
+  titleModal.innerHTML = "Galerie photo";
+});
+
+fileUpload.addEventListener("change", () => {
+  const file = fileUpload.files[0];
+  labelFileUpload.style.display = "none";
+  spanFileUpload.style.display = "none";
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.height = "auto";
+  preview.style.width = "auto";
+});
+
+// check formulaire valide
+fileUpload.addEventListener("change", validateForm);
+inputTitle.addEventListener("input", validateForm);
+selectCategory.addEventListener("change", validateForm);
+
+formAddWork.addEventListener("submit", (event) => {
+  event.preventDefault(); // pour éviter de recharger la page
+
+  const file = fileUpload.files[0];
+
+  const formData = new FormData();
+
+  formData.append("image", file);
+  formData.append("title", inputTitle.value);
+  formData.append("category", selectCategory.value);
+
+  postWork(formData)
+    .then(() => {
+      modal.style.display = "none";
+      return getWorks();
+    })
+    .then((data) => createGallery(data));
 });

@@ -726,3 +726,7 @@ input[type="file"] {
 .disabled {
   color: #1d6154;
 }
+
+.button-add {
+  background-color: pink;
+}

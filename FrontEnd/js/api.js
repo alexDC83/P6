@@ -27,3 +27,10 @@ export const deleteWork = id =>
       "Authorization": `Bearer ${localStorage.token}`
     }
   })
+
+export const postWork = data =>
+  fetch("http://localhost:5678/api/works", {
+    method: 'POST',
+    headers: { "Authorization": `Bearer ${localStorage.token}` },
+    body: data
+  }).then((res) => res.json())
