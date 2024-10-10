@@ -21,8 +21,9 @@ import {
   selectCategory,
   formAddWork,
   inputTitle,
+  submitFormAddPicture
 } from "./domLinker.js";
-import { validateForm } from "./utils.js";
+import { validateForm, validateFile, validateCategory, validateTitle } from "./utils.js";
 
 const createGallery = (data) => {
   divGallery.innerHTML = "";
@@ -120,13 +121,23 @@ if (localStorage.token) {
   divGallery.style.marginTop = "100px";
 }
 
+// On créé l'événement pour ouvrir la modal quand on clique sur le bouton 'Mode édition'
 editModal.addEventListener("click", () => {
   modal.style.display = "block";
+  document.addEventListener('click', dismissModal, true)
 });
 
 modalBtnClose.addEventListener("click", () => {
   modal.style.display = "none";
 });
+
+// https://techstacker.com/close-modal-click-outside-vanilla-javascript/
+const dismissModal = event => {
+  if (event.target === modalBtnClose || !event.target.closest('.modal-main')) {
+    modal.style.display = 'none'
+    document.removeEventListener('click', dismissModal, true)
+  }
+}
 
 getWorks().then((data) => createGallery(data));
 getCategories().then((data) => {
@@ -143,9 +154,16 @@ btnAddPicture.addEventListener("click", () => {
   btnArrowBack.style.display = "flex";
   titleModal.innerHTML = "Ajout photo";
 
-  //TODO afficher le label et le span
-  // et remettre dans l'attribut src de la preview l'image d'orgine
-  // et effacer l'input title
+  // on affiche la preview d'origine du formulaire
+  labelFileUpload.style.display = 'flex'
+  spanFileUpload.style.display = 'flex'
+  preview.src = "./assets/icons/picture.png"
+  preview.style.height = '58px'
+  preview.style.width = '58px'
+  fileUpload.value = ''
+  submitFormAddPicture.classList.add('disabled')
+
+  formAddWork.reset()
 });
 
 btnArrowBack.addEventListener("click", () => {
@@ -157,13 +175,20 @@ btnArrowBack.addEventListener("click", () => {
 });
 
 fileUpload.addEventListener("change", () => {
-  const file = fileUpload.files[0];
-  labelFileUpload.style.display = "none";
-  spanFileUpload.style.display = "none";
 
-  preview.src = URL.createObjectURL(file);
-  preview.style.height = "auto";
-  preview.style.width = "auto";
+  if (validateFile()) {
+    const file = fileUpload.files[0];
+    labelFileUpload.style.display = "none";
+    spanFileUpload.style.display = "none"
+
+
+    preview.src = URL.createObjectURL(file);
+    preview.style.height = "auto";
+    preview.style.width = "auto";
+  } else {
+    fileUpload.value = ''
+  }
+
 });
 
 // check formulaire valide
@@ -174,18 +199,22 @@ selectCategory.addEventListener("change", validateForm);
 formAddWork.addEventListener("submit", (event) => {
   event.preventDefault(); // pour éviter de recharger la page
 
-  const file = fileUpload.files[0];
+  if (validateFile() && validateTitle() && validateCategory()) {
+    const file = fileUpload.files[0];
 
-  const formData = new FormData();
+    const formData = new FormData();
 
-  formData.append("image", file);
-  formData.append("title", inputTitle.value);
-  formData.append("category", selectCategory.value);
+    formData.append("image", file);
+    formData.append("title", inputTitle.value);
+    formData.append("category", selectCategory.value);
 
-  postWork(formData)
-    .then(() => {
-      modal.style.display = "none";
-      return getWorks();
-    })
-    .then((data) => createGallery(data));
+    postWork(formData)
+      .then(() => {
+        modal.style.display = "none";
+        return getWorks();
+      })
+      .then((data) => createGallery(data))
+      .finally(() => formAddWork.reset())
+  }
+
 });

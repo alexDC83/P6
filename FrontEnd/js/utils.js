@@ -1,23 +1,27 @@
-const submitBtn = document.querySelector("#add");
-import { inputTitle, fileUpload, selectCategory } from "./domLinker.js";
+import {
+  inputTitle,
+  fileUpload,
+  selectCategory,
+  titleError,
+  fileError,
+  selectError,
+  submitFormAddPicture
+} from "./domLinker.js";
 
-const titleError = document.getElementById("title-error");
-const fileError = document.getElementById("file-error");
-const selectError = document.getElementById("select-error");
 
-const validateTitle = () => {
+export const validateTitle = () => {
   const titleValid = inputTitle.value.trim().length >= 2;
   titleError.style.display = titleValid ? "none" : "block";
   return titleValid;
 };
 
-const validateCategory = () => {
+export const validateCategory = () => {
   const categoryValid = selectCategory.value !== "";
   selectError.style.display = categoryValid ? "none" : "block";
   return categoryValid;
 };
 
-const validateFile = () => {
+export const validateFile = () => {
   const file = fileUpload.files[0];
   const fileValid =
     file &&
@@ -34,8 +38,8 @@ export const validateForm = () => {
 
   // Active ou désactive le bouton submit selon la validation
   if (fileValid && titleValid && categoryValid) {
-    submitBtn.classList.remove("disabled");
+    submitFormAddPicture.classList.remove("disabled");
   } else {
-    submitBtn.classList.add("disabled");
+    submitFormAddPicture.classList.add("disabled");
   }
 };
